@@ -5,7 +5,11 @@
    or maybe in another file
    honestly not sure anymore
 */
-
+// I finally tried out the new cool feature called vibe coding.
+// No, the leaked API key is not part of vibe coding its an intentional decision to help save me from headaches.
+// Also uh
+// Yes, i used haiku and 4o
+// Not great results, but it works.
 let OWM_API_KEY = localStorage.getItem('mc_weather_api_key') || '1fa7f29552400c8fd70ab801695f0ab7';
 
 let weatherData = null;
