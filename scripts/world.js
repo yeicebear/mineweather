@@ -8,29 +8,36 @@ let terrainBlocks = [];
 let allBlocks = [];
 let weatherParticles = null;
 let allWorldObjects = []; 
+ /**
 
-/**
  * i know my code isnt self documenting.
+
  * I know there arent any comments about the actual code
+
  * 
+
  * BUT WHEN DID THIS FILE GET SO BIG
+
  * 
+
  * like, i know i said i wanted to put all world related stuff in here, but this is getting out of hand
+
  * did i say that?
- */
+
+ */ 
 const textureLoader = new THREE.TextureLoader();
 
 const blockTexture = textureLoader.load('./Textures/dirty.png');
 const grassTexture = textureLoader.load('./Textures/grass.png');
+const tntTexture = textureLoader.load('./Textures/tnt.png');
 
 blockTexture.magFilter = THREE.NearestFilter;
 blockTexture.minFilter = THREE.NearestFilter;
 grassTexture.magFilter = THREE.NearestFilter;
 grassTexture.minFilter = THREE.NearestFilter;
-
-const tntTexture = textureLoader.load('./Textures/tnt.png');
 tntTexture.magFilter = THREE.NearestFilter;
 tntTexture.minFilter = THREE.NearestFilter;
+
 function isValidObjectPlacement(x, z, minDistance = 5) {
     for (let obj of allWorldObjects) {
         const dist = Math.hypot(obj.x - x, obj.z - z);
@@ -39,11 +46,6 @@ function isValidObjectPlacement(x, z, minDistance = 5) {
     return true;
 }
 
-// K, comment abt the code for once.
-// This is a helper function to register world objects (like trees, villages, etc.) and ensure they don't overlap too much. It adds the object to the allWorldObjects array with its position and type. The isValidObjectPlacement function checks if a new object can be placed at a given position without being too close to existing objects. This helps maintain a more natural distribution of features in the world.
-// This is also used for mob spawning, to prevent mobs from spawning inside trees or buildings. When we want to spawn a mob, we can call isValidObjectPlacement with the mob's intended position to check if it's a valid spawn point. If it returns true, we can safely add the mob to the world without worrying about it intersecting with other objects.
-// What greater purpose do we serve in this world? Is it just to create a fun Minecraft weather simulator? Or is there some deeper meaning to all of this? Maybe we're just tiny code monkeys banging on keyboards, creating little digital worlds for people to enjoy. Or maybe we're like the gods of this little Minecraft universe, shaping the terrain and populating it with mobs and villages. Who knows? All I know is that I'm having fun writing this code, and I hope people have fun playing with it too.
-// No, it's to like, share and subscribe! 
 function registerWorldObject(x, z, radius = 1, type = 'generic') {
     allWorldObjects.push({ x, z, radius, type });
 }
@@ -63,14 +65,6 @@ function initEngine() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    /*
-    wait so this, this is just a green overlay to make it look like we're looking through tinted glass, right?
-    this i wanted to do for a while, i just thought it would be a nice touch to make the world feel more cohesive and less like a generic 3D scene. It also helps blend the colors together and gives it that classic Minecraft vibe. Plus, it adds a bit of atmosphere, especially when combined with the fog and lighting effects. I could have done it with shaders, but this was way simpler and still achieves the desired effect. It's like we're looking at the world through a slightly dirty window, which fits the whole "weather" theme of the project.
-    uhhhhh
-    also, 
-    BOOOOOMMMmmm
-    I dont believe in mangoes tbh
-    */
     const canvas = document.getElementById("mc-canvas");
     const overlay = document.createElement('div');
     overlay.id = 'green-overlay';
