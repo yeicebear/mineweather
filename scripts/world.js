@@ -27,16 +27,10 @@ let allWorldObjects = [];
  */ 
 const textureLoader = new THREE.TextureLoader();
 
-const blockTexture = textureLoader.load('./Textures/dirty.png');
-const grassTexture = textureLoader.load('./Textures/grass.png');
-const tntTexture = textureLoader.load('./Textures/tnt.png');
+const blockTexture = textureLoader.load('./textures/dirty.png');
 
 blockTexture.magFilter = THREE.NearestFilter;
 blockTexture.minFilter = THREE.NearestFilter;
-grassTexture.magFilter = THREE.NearestFilter;
-grassTexture.minFilter = THREE.NearestFilter;
-tntTexture.magFilter = THREE.NearestFilter;
-tntTexture.minFilter = THREE.NearestFilter;
 
 function isValidObjectPlacement(x, z, minDistance = 5) {
     for (let obj of allWorldObjects) {
@@ -86,11 +80,6 @@ function initEngine() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 }
-const textureLoader = new THREE.TextureLoader();
-const blockTexture = textureLoader.load('../Textures/dirty.png');
-blockTexture.magFilter = THREE.NearestFilter;
-blockTexture.minFilter = THREE.NearestFilter;
-
 function getUVs(tileX, tileY, atlasSize = 4) {
     const size = 1.0 / atlasSize;
     const x = tileX * size;
