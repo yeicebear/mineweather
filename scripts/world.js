@@ -20,15 +20,17 @@ let allWorldObjects = [];
  */
 const textureLoader = new THREE.TextureLoader();
 
-const textureLoader = new THREE.TextureLoader();
-
-const blockTexture = textureLoader.load('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19/assets/minecraft/textures/block/dirt.png');
-const grassTexture = textureLoader.load('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19/assets/minecraft/textures/block/grass_block_top.png');
+const blockTexture = textureLoader.load('./Textures/dirty.png');
+const grassTexture = textureLoader.load('./Textures/grass.png');
 
 blockTexture.magFilter = THREE.NearestFilter;
 blockTexture.minFilter = THREE.NearestFilter;
 grassTexture.magFilter = THREE.NearestFilter;
 grassTexture.minFilter = THREE.NearestFilter;
+
+const tntTexture = textureLoader.load('./Textures/tnt.png');
+tntTexture.magFilter = THREE.NearestFilter;
+tntTexture.minFilter = THREE.NearestFilter;
 function isValidObjectPlacement(x, z, minDistance = 5) {
     for (let obj of allWorldObjects) {
         const dist = Math.hypot(obj.x - x, obj.z - z);
