@@ -81,7 +81,7 @@ function initEngine() {
     });
 }
 const textureLoader = new THREE.TextureLoader();
-const blockTexture = textureLoader.load('../textures/dirty.png');
+const blockTexture = textureLoader.load('../Textures/dirty.png');
 blockTexture.magFilter = THREE.NearestFilter;
 blockTexture.minFilter = THREE.NearestFilter;
 
