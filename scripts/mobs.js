@@ -4,9 +4,9 @@ export class MobManager {
         this.mobs = [];
         this.textureLoader = new THREE.TextureLoader();
         this.mobTextures = {
-            zombie: this.textureLoader.load('https://example.com/zombie.png'),
-            blaze: this.textureLoader.load('https://example.com/blaze.png'),
-            enderman: this.textureLoader.load('https://example.com/enderman.png')
+            zombie: this.textureLoader.load('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19/assets/minecraft/textures/entity/zombie/zombie.png'),
+            blaze: this.textureLoader.load('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19/assets/minecraft/textures/entity/blaze.png'),
+            enderman: this.textureLoader.load('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19/assets/minecraft/textures/entity/enderman/enderman.png')
         };
     }
 
