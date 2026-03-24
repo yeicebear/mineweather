@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(0.5deg); }
+  75% { transform: rotate(-0.5deg); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes bonk {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(0.8); }
+}
+
+@keyframes wiggle {
+  0%, 100% { margin-left: 0; }
+  25% { margin-left: 2px; }
+  75% { margin-left: -2px; }
+}
+
+:root {
+  --green: #55FF55;
+  --green-dark: #2A7A2A;
+  --green-mid: #3DB83D;
+  --amber: #FFAA00;
+  --bg: #000;
+  --text: #E0E0E0;
+  --panel: rgba(0, 0, 0, 0.82);
+  --border: #555;
+  --sky-top: #1a3a6e;
+  --sky-bottom: #6ab0f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  overflow: hidden;
+  font-size: 18px;
+}
+
+#canvas-container {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 55%, #5a8a3a 55%, #3a6a1a 65%, #2a4a10 100%);
+}
+
+#canvas-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(255,255,255,0.03) 32px),
+    repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(255,255,255,0.03) 32px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  image-rendering: pixelated;
+}
+
+#loading {
+  position: fixed;
+  inset: 0;
+  background: #000 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Crect x='32' y='32' width='32' height='32' fill='%23111'/%3E%3Crect x='32' y='0' width='32' height='32' fill='%230a0a0a'/%3E%3Crect x='0' y='32' width='32' height='32' fill='%230a0a0a'/%3E%3C/svg%3E") repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  gap: 16px;
+}
+
+#loading h2 {
+  font-family: 'Press Start 2P', monospace;
+  color: var(--green);
+  font-size: clamp(16px, 3vw, 28px);
+  text-shadow: 3px 3px 0 var(--green-dark), 0 0 30px var(--green);
+  letter-spacing: 2px;
+  margin: 0 0 8px;
+  animation: flicker 3s infinite, wobble 0.3s infinite;
+}
+
+#load-status {
+  font-family: 'VT323', monospace;
+  color: var(--text);
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+#loading-bar-wrap {
+  width: 320px;
+  height: 20px;
+  background: #1a1a1a;
+  border: 2px solid var(--green-dark);
+  box-shadow: 0 0 8px rgba(85,255,85,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green-dark), var(--green));
+  transition: width 0.4s ease;
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.2);
+}
+
+#get-location-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #000;
+  background: linear-gradient(180deg, #7cff7c 0%, var(--green) 40%, var(--green-mid) 60%, var(--green-dark) 100%);
+  border: none;
+  border-bottom: 4px solid #1a4a1a;
+  border-right: 4px solid #1a4a1a;
+  border-top: 2px solid #aaffaa;
+  border-left: 2px solid #aaffaa;
+  padding: 10px 20px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.1s;
+  image-rendering: pixelated;
+  box-shadow: 0 0 16px rgba(85,255,85,0.4);
+}
+
+#get-location-btn:hover {
+  background: linear-gradient(180deg, #aaffaa 0%, #7cff7c 40%, var(--green) 60%, var(--green-mid) 100%);
+  box-shadow: 0 0 24px rgba(85,255,85,0.7);
+}
+
+#get-location-btn:active {
+  border-bottom: 2px solid #1a4a1a;
+  border-right: 2px solid #1a4a1a;
+  border-top: 4px solid #1a4a1a;
+  border-left: 4px solid #1a4a1a;
+  transform: translate(2px, 2px);
+}
+
+#loading-tips {
+  margin-top: 16px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--green-dark);
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(85,255,85,0.2);
+}
+
+#loading-tips p {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+  transition: opacity 0.3s ease;
+}
+
+#crosshair {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+#crosshair::before,
+#crosshair::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,255,255,0.85);
+}
+
+#crosshair::before {
+  width: 2px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#crosshair::after {
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 14px;
+  background: var(--panel);
+  border-bottom: 2px solid var(--green-dark);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.6);
+}
+
+#title-block h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px, 1.6vw, 16px);
+  color: var(--green);
+  margin: 0 0 4px;
+  text-shadow: 2px 2px 0 var(--green-dark), 0 0 12px rgba(85,255,85,0.5);
+  animation: wiggle 0.5s infinite;
+}
+
+#title-block > span {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--text);
+}
+
+#biome-label {
+  color: var(--green);
+}
+
+#daybadge {
+  margin-left: 10px;
+  background: var(--amber);
+  color: #000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-bottom: 2px solid #885500;
+  border-right: 2px solid #885500;
+  vertical-align: middle;
+}
+
+#weather-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--green-dark);
+  padding: 8px 14px;
+  box-shadow: 0 0 8px rgba(85,255,85,0.15);
+}
+
+#weather-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+#weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wloc {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--green);
+}
+
+.wdetail {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: var(--amber);
+}
+
+.wbiome {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #aaa;
+}
+
+#settings-panel {
+  pointer-events: auto;
+}
+
+#settings-panel input[type="text"] {
+  font-family: 'VT323', monospace;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #666;
+  color: #fff;
+  font-size: 14px;
+}
+
+#settings-panel button {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  color: #000;
+  background: linear-gradient(180deg, #ff9d4d 0%, #ff7a2e 40%, #ff5f1a 60%, #d94010 100%);
+  border: none;
+  border-bottom: 4px solid #6b2808;
+  border-right: 4px solid #6b2808;
+  border-top: 2px solid #ffaa77;
+  border-left: 2px solid #ffaa77;
+  padding: 8px 16px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.1s;
+  image-rendering: pixelated;
+  box-shadow: 0 0 16px rgba(255, 122, 46, 0.4);
+}
+
+#settings-panel button:hover {
+  background: linear-gradient(180deg, #ffaa77 0%, #ff9d4d 40%, #ff7a2e 60%, #ff5f1a 100%);
+  box-shadow: 0 0 24px rgba(255, 122, 46, 0.7);
+}
+
+#settings-panel button:active {
+  border-bottom: 2px solid #6b2808;
+  border-right: 2px solid #6b2808;
+  border-top: 4px solid #6b2808;
+  border-left: 4px solid #6b2808;
+  transform: translate(2px, 2px);
+}
+
+#settings-panel select {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #000;
+  background: linear-gradient(180deg, #7dd9ff 0%, #4dbfff 40%, #2a9eff 60%, #1a6fb0 100%);
+  border: none;
+  border-bottom: 4px solid #0d3f5f;
+  border-right: 4px solid #0d3f5f;
+  border-top: 2px solid #aae8ff;
+  border-left: 2px solid #aae8ff;
+  padding: 6px 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.1s;
+  image-rendering: pixelated;
+  box-shadow: 0 0 16px rgba(77, 191, 255, 0.4);
+}
+
+#settings-panel select:hover {
+  background: linear-gradient(180deg, #aae8ff 0%, #7dd9ff 40%, #4dbfff 60%, #2a9eff 100%);
+  box-shadow: 0 0 24px rgba(77, 191, 255, 0.7);
+}
+
+#settings-panel select:active {
+  border-bottom: 2px solid #0d3f5f;
+  border-right: 2px solid #0d3f5f;
+  border-top: 4px solid #0d3f5f;
+  border-left: 4px solid #0d3f5f;
+  transform: translate(2px, 2px);
+}
+
+#bottombar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--panel);
+  border-top: 2px solid var(--green-dark);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: var(--green);
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.6);
+}
+/*
+   ui is held together by duct tape and prayers, and magic friendliness pellets (undertale reference btw if u cant tell)
+
+   if you move one thing
+   something else will break
+   i dont know why
+*/
+#hud * {
+  pointer-events: auto;
+}
+
+#settings-panel {
+  position: fixed;
+  bottom: 60px;
+  left: 14px;
+  background: var(--panel);
+  border: 2px solid var(--green-dark);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+
+#city-input {
+  background: #000;
+  border: 2px solid var(--border);
+  color: var(--green);
+  font-family: 'VT323', monospace;
+  padding: 4px;
+  outline: none;
+}
+
+input[type="range"] {
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+#coords-window {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 3px solid var(--green-dark);
+  padding: 8px 16px;
+  box-shadow: 
+    0 0 16px rgba(85, 255, 85, 0.3),
+    inset 0 0 8px rgba(85, 255, 85, 0.1);
+  z-index: 25;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+#coords {
+    color: var(--green);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 4px rgba(85, 255, 85, 0.5);
+}
+
+#time-display { 
+  color: var(--amber); 
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+}
+
+#fps-display { 
+  color: #55ffff;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+}
+
+@keyframes flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96% { opacity: 0.7; }
+  97% { opacity: 1; }
+  98% { opacity: 0.6; }
+  99% { opacity: 1; }
+}

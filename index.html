@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mineweather yippi</title>
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div id="loading">
+  <h2>⛏ mineweather</h2>
+  <p id="load-status">getting your ip address rn</p>
+  <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
+  <button id="get-location-btn" onclick="requestLocation()">▶ gimme ur location 😈</button>
+  <div id="loading-tips">
+    <p id="tip">Did you know? Rain makes the terrain more interesting!</p>
+  </div>
+</div>
+
+<div id="canvas-container"><canvas id="mc-canvas"></canvas></div>
+
+<div id="crosshair"></div>
+
+<div id="hud">
+  <div id="topbar">
+    <div id="title-block">
+      <h1>⛏ mineweather :D:D:D:D</h1>
+      <span>Biome: <span id="biome-label">not here. . .</span><span id="daybadge">DAY</span></span>
+    </div>
+    <div id="weather-card">
+      <div id="weather-icon">🌍</div>
+      <div id="weather-info">
+        <div class="wloc" id="wloc">Locating...</div>
+        <div class="wdetail" id="wdetail">—</div>
+        <div class="wbiome" id="wbiome">Scanning biome...</div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  im so cool 🥵🥶🥶
+  <div id="settings-panel">
+  <input type="text" id="city-input" placeholder="Enter city (e.g. Tokyo)...">
+  <button onclick="searchCity()">SEARCH</button>
+  
+  <div class="slider-group">
+    <label>Time of Day</label>
+    <input type="range" id="time-slider" min="0" max="23" value="12" step="1" oninput="updateTime(this.value)" style="appearance: none; background: repeating-linear-gradient(90deg, #000, #000 10px, #555 10px, #555 20px);">
+  </div>
+
+  <div class="slider-group"> not really a slider but whatever
+    <label>Shader Style (BSL/SEUS/BLS)</label>
+    <select id="shader-select" onchange="applyShader(this.value)">
+      <option value="none">Vanilla not really</option>
+      <option value="bsl">BSL not really</option>
+      <option value="seus">SEUS not really</option>
+      <option value="complementary">Complementary not realy</option>
+    </select>
+  </div>
+
+  <button onclick="placeTNT()" style="margin-top: 10px; width: 100%; background: linear-gradient(180deg, #ffcc00 0%, #ffaa00 40%, #ff8800 60%, #ff6600 100%); border: none; border-bottom: 4px solid #663300; border-right: 4px solid #663300; border-top: 2px solid #ffddaa; border-left: 2px solid #ffddaa; padding: 10px; cursor: pointer; font-family: 'Press Start 2P'; font-size: 10px; color: #000; letter-spacing: 1px; box-shadow: 0 0 16px rgba(255, 170, 0, 0.4); transition: all 0.1s; image-rendering: pixelated;">💣 BOOM</button>
+</div>
+</div>
+<div id="bottombar"></div>
+<div id="coords-window">
+    <div id="coords">XYZ: — / 64 / —</div>
+    <div id="time-display"> —:—</div>
+    <div id="fps-display">— FPS</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="scripts/world.js"></script>
+<script src="scripts/ui(🥵🥵).js"></script>
+<script src="scripts/stupidScript.js"></script>
+
+</body>
+</html>
