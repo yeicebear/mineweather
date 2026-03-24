@@ -1,4 +1,4 @@
-export class MobManager {
+class MobManager {
     constructor(scene) {
         this.scene = scene;
         this.mobs = [];
